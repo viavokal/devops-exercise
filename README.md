@@ -21,8 +21,9 @@ Your project is simple, as a DevOps panda you need to have the ability to develo
 Below, you can find the description of your tasks.
 
 ###### NodeJS/Python services
-Create two basic NodeJs/Python services, the first is static-panda which should serve static files from a directory called `resources`. The directory should contain two files, small.png and medium.png. You may use any image that you like, as long as there is a panda over there.  
-The second service shall be called counting-panda, and should just maintain a counter of the amount of GET requests it served, and return it on every GET request it gets.
+Create two basic NodeJs or Python services, the first is gify-panda which should serve static files from a directory called `resources`. The directory should contain a random number of files. You may use any image that you like, as long as there is a panda over there.
+
+The second service shall be called counter-panda, and should just maintain a counter of the amount of POST requests it served, and return it on every GET request it gets.
 A sample NodeJS service named bamboo-app already exists  [here](roles/bamboo/files/bamboo-app)
 
 ###### Deployment
@@ -38,8 +39,8 @@ Please make sure you have a decent `--help` in your script.
 #### Deliverables
 A GitHub Pull-Request to **YOUR DUPLICATED REPO**, containing:  
 
-1. The code for both static-panda and counting-panda.
-1. Ansible roles which takes care of provisioning both services.
+1. The code for both gify-panda and counter-panda.
+1. Ansible roles which takes care of provisioning both services on a VM called base.
 1. Modified base.yml which install ONLY the newly written services on the base VM.
 1. **BONUS** A wrapper script on top of ansible-playbook which deploys the latest version of those services.
 
