@@ -1,0 +1,6 @@
+---
+- name: copy bamboo app
+  copy: src=bamboo-app dest=/tmp/ owner=root group=root mode=0755
+
+- name: npm install
+  npm: path=/tmp/bamboo-app
