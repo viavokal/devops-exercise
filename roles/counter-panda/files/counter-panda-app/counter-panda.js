@@ -2,6 +2,7 @@ var http = require('http');
 var config = require('./config.json');
 var HttpDispatcher = require('httpdispatcher');
 var dispatcher = new HttpDispatcher();
+var PostsCounter = 0;
 
 function handleRequest(request, response){
     try {
@@ -12,14 +13,20 @@ function handleRequest(request, response){
     }
 }
 
+dispatcher.onPost("/PostRequest", function(req, res) {
+    PostsCounter++
+    console.log(PostsCounter);
+    res.end('PostsCounter');
+});
+
 dispatcher.onGet("/", function(req, res) {
     res.writeHead(200, {'Content-Type': 'text/plain'});
-    res.end('I <3 Marina');
+    res.end('Post Requests Current Counter: ' + PostsCounter);
 });
 
 dispatcher.onError(function(req, res) {
-        res.writeHead(404);
-        res.end("404 - Page Does not exists");
+    res.writeHead(404);
+    res.end("404 - Page Does not exists");
 });
 
 http.createServer(handleRequest).listen(config.port, function(){
