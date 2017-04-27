@@ -1,0 +1,32 @@
+#!/bin/sh
+#
+# description: nodejs forever service for {{service_name}}
+# logfile: $SOURCE_DIR/{{source_name}}_forever.log
+
+export SOURCE_DIR={{source_dir}}    # Location of the application source
+export SOURCE_NAME={{source_name}}              # Name os the applcation entry point script
+export LOG_FILE=$SOURCE_DIR/{{service_name}}_forever.log
+export FOREVER_EXEC=$(which forever)       # Forever executable location
+export NODE_PATH=$NODE_PATH:/usr/local/lib/node_modules
+
+case "$1" in
+start)
+  exec nodejs $FOREVER_EXEC start --sourceDir=$SOURCE_DIR -l $LOG_FILE -a -p $SOURCE_DIR $SOURCE_NAME
+  ;;
+stop)
+  exec nodejs $FOREVER_EXEC stop -p $SOURCE_DIR $SOURCE_DIR/$SOURCE_NAME
+  ;;
+restart)
+  exec nodejs $FOREVER_EXEC restart -p $SOURCE_DIR $SOURCE_DIR/$SOURCE_NAME
+  ;;
+status)
+  exec nodejs $FOREVER_EXEC list  | grep $SOURCE_NAME
+  ;;
+*)
+  echo "Usage: /etc/init.d/{{service_name}} {start|stop|restart|status}"
+  exit 1
+  ;;
+esac
+
+exit 0
+~
