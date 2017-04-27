@@ -1,8 +1,8 @@
 {
-  "name": "counter-panda_app",
+  "name": "gify-panda_app",
   "version": "1.0.0",
-  "description": "Counting POST Requests Galore",
-  "main": "counter-panda.js",
+  "description": "Serving static files via HTTP",
+  "main": "gify-panda.js",
   "dependencies": {
     "httpdispatcher": "^1.0.0"
     "express": "^1.0.0"

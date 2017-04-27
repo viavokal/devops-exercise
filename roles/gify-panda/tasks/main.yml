@@ -1,6 +1,6 @@
 ---
 - name: gify-panda app
-  copy: src=gify-panada-app dest=/srv/devopsbp owner=root group=root mode=0755
+  copy: src=gify-panda-app dest=/srv/devopsbp owner=root group=root mode=0755
 
 - name: npm install
   npm: path=/srv/devopsbp/gify-panda-app
