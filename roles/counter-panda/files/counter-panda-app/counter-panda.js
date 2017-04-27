@@ -38,3 +38,7 @@ dispatcher.onError(function(req, res) {
     res.writeHead(404);
     res.end("404 - Page Does not exists");
 });
+
+http.createServer(handleRequest).listen(config.port, function(){
+    console.log("Server listening on: http://localhost:%s", config.port);
+});
