@@ -1,9 +1,0 @@
-{
-  "name": "bamboo_app",
-  "version": "1.0.0",
-  "description": "I can haz bamboo!",
-  "main": "bamboo.js",
-  "dependencies": {
-    "httpdispatcher": "^1.0.0"
-  }
-}
