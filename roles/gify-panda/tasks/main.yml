@@ -4,3 +4,8 @@
 
 - name: npm install
   npm: path=/srv/devopsbp/gify-panda-app
+
+- name: Install "forever" node.js package globally.
+  npm:
+    name: forever
+    global: yes
