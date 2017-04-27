@@ -1,6 +1,6 @@
 ---
 - name: copy counter-panda app
-  copy: src=bamboo-panda-app dest=/tmp/ owner=root group=root mode=0755
+  copy: src=counter-panda-app dest=/srv/devopsbp owner=root group=root mode=0755
 
 - name: npm install
-  npm: path=/tmp/counter-panda-app
+  npm: path=/srv/devopsbp/counter-panda-app

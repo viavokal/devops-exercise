@@ -6,9 +6,9 @@
     - name: Set hostname
       hostname: name={{inventory_hostname}}
 
-- name: Base bamboo service
+- name: Base counter-panda service
   hosts: base
   become: yes
   roles:
     - { role: nodejs, tags: nodejs }
-    - { role: bamboo, tags: bamboo }
+    - { role: counter-panda, tags: counter-panda }
