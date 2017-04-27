@@ -12,4 +12,19 @@
   roles:
     - { role: nodejs, tags: nodejs }
     - { role: counter-panda, tags: counter-panda }
+
+
+- name: Base gify-panda service
+  hosts: base
+  become: yes
+  vars:
+    service_name: gify-panda
+    source_dir: /srv/devopsbp/gify-panda-app
+    source_name: gify-panda.js
+    log_file: gify_panda_forever.log
+
+  roles:
+    - { role: nodejs, tags: nodejs }
     - { role: gify-panda, tags: gify-panda }
+
+
