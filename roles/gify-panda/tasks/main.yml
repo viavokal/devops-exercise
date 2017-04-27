@@ -1,11 +1,26 @@
 ---
-- name: gify-panda app
-  copy: src=gify-panda-app dest=/srv/devopsbp owner=root group=root mode=0755
+vars:
 
-- name: npm install
-  npm: path=/srv/devopsbp/gify-panda-app
+  service_name: gify-panda
+  source_dir: /srv/devopsbp/gify-panda-app
+  source_name: gify-panda.js
+  log_file: gify_panda_forever.log
 
-- name: Install "forever" node.js package globally.
-  npm:
-    name: forever
-    global: yes
+tasks:
+
+  - name: gify-panda app
+    copy: src=gify-panda-app dest=/srv/devopsbp owner=root group=root mode=0755
+
+  - name: npm install
+    npm: path=/srv/devopsbp/gify-panda-app
+
+  - name: Install "forever" node.js package globally.
+    npm:
+      name: forever
+      global: yes
+
+  - name: Add forever nodejs init.d script
+    action: template src=templates/nodejs_daemon.template dest=/etc/init.d/{{service_name}}  owner=root group=root mode=0755
+
+  - name: Ensure gify-panda service is started
+    action: service name=gify-panda state=started
