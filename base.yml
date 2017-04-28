@@ -1,14 +1,34 @@
 ---
 - name: Common tasks FTW
   hosts: all
-  sudo: yes
+  become: yes
   pre_tasks:
     - name: Set hostname
       hostname: name={{inventory_hostname}}
 
-- name: Base bamboo service
+- name: Base counter-panda service
   hosts: base
-  sudo: yes
+  become: yes
+  vars:
+    service_name: counter-panda
+    source_dir: /srv/devopsbp/counter-panda-app
+    source_name: counter-panda.js
+
   roles:
     - { role: nodejs, tags: nodejs }
-    - { role: bamboo, tags: bamboo }
+    - { role: counter-panda, tags: counter-panda }
+
+
+- name: Base gify-panda service
+  hosts: base
+  become: yes
+  vars:
+    service_name: gify-panda
+    source_dir: /srv/devopsbp/gify-panda-app
+    source_name: gify-panda.js
+
+  roles:
+    - { role: nodejs, tags: nodejs }
+    - { role: gify-panda, tags: gify-panda }
+
+

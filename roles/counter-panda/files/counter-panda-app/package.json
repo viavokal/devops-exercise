@@ -1,0 +1,9 @@
+{
+  "name": "counter-panda_app",
+  "version": "1.0.0",
+  "description": "Counting POST Requests Galore",
+  "main": "counter-panda.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0"
+  }
+}

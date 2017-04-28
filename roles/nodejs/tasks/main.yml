@@ -1,6 +1,6 @@
 ---
 - name: Install dependencies
-  sudo: true
+  become: yes
   apt: pkg={{item}} state=installed
   with_items:
     - nodejs

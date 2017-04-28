@@ -1,0 +1,10 @@
+{
+  "name": "gify-panda_app",
+  "version": "1.0.0",
+  "description": "Serving static files via HTTP",
+  "main": "gify-panda.js",
+  "dependencies": {
+    "httpdispatcher": "^1.0.0",
+    "express": "^4.15.2"
+  }
+}

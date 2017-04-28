@@ -1,54 +1,39 @@
-# BigPanda DevOps Exercise
+# BigPanda DevOps Exercise - Avraham Kalvo
 #### INTRO
-Good morning, Mr. Panda. Your mission, should you choose to accept it, involves the development and deployment of two nanoservices.
-Please read the following instructions before starting to implement your mission, you don't want to miss any important instruction, especially those in [General Guidelines](#general-guidelines)
+Welcome to my solution for the BigPanda DevOps Exercise.
+I decided to implement the services in nodejs, as I'm already familiar with Python and was enjoying the challenge.
 
-#### Get your environment ready
-You'll need a linux machine with the ability to run vms.
+#### Solution Specification
+As per the exercise requirements, there are two services provided along with the ansible playbook and other components to have them deployed and running
 
-1. Install Ansible (Any version above 1.8 and below 2.0 should be fine).
-1. Install Vagrant.
-1. Install VirtualBox.
-1. Mirror this git repo using the instructions [here](https://help.github.com/articles/duplicating-a-repository). Then clone it locally. (**Please DO NOT fork the repo**)
-1. Run `vagrant up base` and make sure you can ssh into the machine using `vagrant ssh base`.
-1. Inside the vm execute `nodejs /tmp/bamboo-app/bamboo.js`.
-1. Open your browser, go to <http://localhost:8080>, you should get some information about how much we love bamboo.
+1. counter-panda-app: a nodejs application which counts any POST requests accepted via http://localhost:8080/PostRequest and publishes the number of requests counted whenever accesed via a GET request on http://localhost:8080/
+1. gify-panda-app: a nodejs application which serves static files from the "resources" subdirectory
+1. gify-panda-app resources directory: a library of 6 panda gifs extracted from giphy.com (PG rated)
+1. init.d j2 template: to be deployed as an /etc/init.d file for each of the services requested 
+1. deployment wrapper script: used to quickly deploy any of the scripts (BONUS task)
 
-#### Ready for action?
-Great.  
-Your project is simple, as a DevOps panda you need to have the ability to develop nanoservices and create a mechanism for deploying them.  
-Below, you can find the description of your tasks.
 
-###### NodeJS/Python services
-Create two basic NodeJs/Python services, the first is panda-service which should serve static files from a directory called `resources`. The directory should contain two files, small.png and medium.png. You may use any image that you like, as long as there is a panda over there.  
-The second service shall be called big-service, and should just maintain a counter of the amount of GET requests it served, and return it on every GET request it gets.
-A sample NodeJS service named bamboo-app already exists  [here](roles/bamboo/files/bamboo-app)
+#### Considerations & Guidelines
+For the counter-panda-app, a specific URL was designated to listen on POST request events which is /PostRequest,
+This was tested out simply by issuing a POST request to this URL using curl.
 
-###### Deployment
-Create an ansible role for each of the services. The role should install the service and make sure it's ready to be used in **production** (see [General Guidelines](#general-guidelines)). 
-A sample role for bamboo-app already exists for your convenience.  (Please note: samples are not full, and do not contain all relevant the details, you're expected to improve them, and add missing tasks).
-We understand there might be a short service downtime when re-deploying a service, that’s fine.
+As per the gify-panda-app, static files serving was implemented using the 'express' nodejs framework, which is installed as a dependency for this service package.
 
-###### Wrapper
-This part is a **BONUS** part, if you find this exercise simple and short, feel free to do it.  
-Create a simple utility for deploying both services. Your utility should support deploying a single service, or all of them.  
-Please make sure you have a decent `--help` in your script.
+I chose to implement 'forever' as the daemon manager for the supplied nodejs services, as it provides built in capabilities for service restart upon crashing, monitoring and logging. Forever is installed globaly as part of the prerequisite tasks for each service role.
 
-#### Deliverables
-A GitHub Pull-Request to **YOUR DUPLICATED REPO**, containing:  
+Services them selves don't maintain log files, as I relied on the forever mechanism to log everything spooled by their runs.
+Log rotation was omitted as well.
 
-1. The code for both big-service and panda-service.
-1. Ansible roles which takes care of provisioning both services.
-1. Modified base.yml which install ONLY the newly written services on the base VM.
-1. **BONUS** A wrapper script on top of ansible-playbook which deploys the latest version of those services.
+The init.d scripts for each of the services is deployed based on the devops-exercise/nodejs_daemon.template.j2 template file, which utilizes role specific variables initialised for each role in the main playbook.
 
-The Pull-Request should contain a short description of the roles you created, and any other comment you’d like us to know of.
+Since ansible 'service' module doesn't provide service registration, but only management of existing services, the task which verify a service is indeed at started state was omitted, and a manual run of update-rc.d defaults for each service has to be issued to complete  registration of the supplied applications as services.
+A possible solution of wrapping up this step in a shell script and issuing it as an ansible task was eventually rejected, as well as setting it up to automatically start upon boot/crash via systemd or upstart/initctl.
 
-#### General Guidelines
-Your code should be as simple as possible, yet well documented and robust.  
-Spend some time on designing your solution. 
-Think about operational use cases from the real world. Few examples:
+The wrapper deployer "deploy_services.sh" simply receives a set of comma seperated tags in order to decide on which task to apply from the playbook, i.e - which service to deploy.
 
-1. Can you run the playbook multiple times without any problem?
-1. What happens if a service crashes?
-1. How much effort will it take to create a new service?
+#### Summary
+Thanks in advance for this challange, I really enjoyed taking upon it.
+Thank you for taking the time to review this solution, would appreciate your feedback when comfortable.
+
+Avraham Kalvo
+

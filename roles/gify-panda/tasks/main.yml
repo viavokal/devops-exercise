@@ -1,0 +1,14 @@
+---
+- name: gify-panda app
+  copy: src=gify-panda-app dest=/srv/devopsbp owner=root group=root mode=0755
+
+- name: npm install
+  npm: path=/srv/devopsbp/gify-panda-app
+
+- name: Install "forever" node.js package globally
+  npm:
+    name: forever
+    global: yes
+
+- name: Add forever nodejs init.d script
+  action: template src=nodejs_daemon.template.j2 dest=/etc/init.d/{{service_name}}  owner=root group=root mode=0755
