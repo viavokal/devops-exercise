@@ -1,6 +1,6 @@
 # BigPanda DevOps Exercise - Avraham Kalvo
 #### INTRO
-Welcome to my solution for the BigPanda DevOps Exercise
+Welcome to my solution for the BigPanda DevOps Exercise.
 I decided to implement the services in nodejs, as I'm already familiar with Python and was enjoying the challenge.
 
 #### Solution Specification
@@ -31,4 +31,9 @@ A possible solution of wrapping up this step in a shell script and issuing it as
 
 The wrapper deployer "deploy_services.sh" simply receives a set of comma seperated tags in order to decide on which task to apply from the playbook, i.e - which service to deploy.
 
+#### Summary
+Thanks in advance for this challange, I really enjoyed taking upon it.
+Thank you for taking the time to review this solution, would appreciate your feedback when comfortable.
+
+Avraham Kalvo
 
